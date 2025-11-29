@@ -1,0 +1,142 @@
+'use client';
+import { useState } from "react";
+import { Bot, ChevronDown, HelpCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+const faqs = [
+  {
+    question: "Is this legal? Are you officially affiliated with KIIT?",
+    answer:
+      "We’re an independent, student-built platform made to serve the KIIT community. While not officially affiliated with the university, we operate within all legal and ethical guidelines. Our goal is to make campus life smoother - built by students, for students!",
+  },
+  {
+    question: "How much does it cost to use KIIT Saathi?",
+    answer:
+      "Almost everything is completely free! Access study materials, course details, AI chat support, the campus map, and more - all without paying a single rupee. Some upcoming features may have optional paid upgrades later, but for now, KIIT Saathi is 100% free to use.",
+  },
+  {
+    question: "Who are you? Can I trust you with my data and services?",
+    answer:
+      "Absolutely! KIIT Saathi is created and managed by a team of current KIIT students who faced the same everyday struggles - from finding lost items to managing notes and grades. We respect privacy, ensure transparency, and never collect unnecessary information.",
+  },
+  {
+    question: "How does the KIIT Saathi (AI Assistant) work?",
+    answer:
+      "Our AI chatbot is available 24×7 to guide you with campus help, lost & found, society events, study resources, and more. Just ask - whether you’re confused, curious, or need quick answers, KIIT Saathi is here for you.",
+  },
+  {
+    question: "How do I use the Study Material section?",
+    answer:
+      "Simply browse your branch and semester to access curated notes, PYQs, lab manuals, and YouTube playlists shared by seniors. If you ever see a “file not found” error, just reload the page - the content will reappear automatically.",
+  },
+  {
+    question: "What should I do if I lose something on campus?",
+    answer:
+      "Visit our Lost & Found Portal, enter the item details, and we’ll help you report or claim it safely. Found someone’s AirPods, ID card, or bag? You can easily report those too - we handle it anonymously and securely.",
+  },
+  {
+    question: "What can I find in KIIT Societies, Fests & Sports?",
+    answer:
+      "Stay updated with all ongoing and upcoming university events! From society recruitments and interviews to fests and tournaments - we bring every official and student-led event to one shared calendar so you never miss an opportunity again.",
+  },
+  {
+    question: "What’s included under Course & Faculty Details?",
+    answer:
+      "You can view a complete overview of your branch-wise course structure, subject list, and official faculty directory. It’s verified, updated, and easy to navigate for every semester.",
+  },
+  {
+    question: "How does the Campus Map help me?",
+    answer:
+      "The interactive Campus Map shows all buildings, hostels, canteens, and facilities with real-time navigation. Search for any location, get directions, and even find nearby food stalls or ATMs!",
+  },
+];
+
+const FAQ: React.FC = () => {
+  const router = useRouter();
+  const [openItems, setOpenItems] = useState<number[]>([]);
+
+  const toggleItem = (index: number) => {
+    setOpenItems(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    );
+  };
+
+  return (
+    <section id="faq" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-gray-50/50 to-white/50">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-gradient-to-r from-kiit-green to-fedkiit-green text-white rounded-full text-sm font-semibold max-w-fit mx-auto">
+            <HelpCircle className="w-4 h-4" />
+            Got Questions?
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-poppins font-bold bg-gradient-to-r from-kiit-green via-campus-blue to-campus-purple bg-clip-text text-transparent mb-6">
+            Frequently Asked
+            <span className="block">Questions</span>
+          </h2>
+
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
+            Everything you need to know about using KIIT Saathi.
+            <span className="font-semibold text-kiit-green-dark shadow-box-dark">
+              {" "}
+              Still have questions? Just ask our AI assistant!
+            </span>
+          </p>
+        </div>
+
+        {/* FAQ List */}
+        <div className="max-w-4xl mx-auto space-y-4 px-4">
+          {faqs.map((faq, index) => (
+            <div key={index} className="glass-card overflow-hidden">
+              <button
+                onClick={() => toggleItem(index)}
+                className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-start sm:items-center justify-between hover:bg-kiit-green-soft/50 transition-colors"
+              >
+                <h3 className="text-base sm:text-lg font-semibold text-foreground pr-4 leading-snug">
+                  {faq.question}
+                </h3>
+                <ChevronDown
+                  className={`w-5 h-5 font-semibold text-kiit-green transition-transform duration-300 flex-shrink-0 mt-1 sm:mt-0 ${
+                    openItems.includes(index) ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {openItems.includes(index) && (
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6 border-t border-white/20">
+                  <p className="text-sm font-semibold sm:text-base text-muted-foreground leading-relaxed pt-4">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Contact CTA */}
+        <div className="text-center mt-12 px-4">
+          <div className="glass-card p-6 sm:p-8 max-w-2xl mx-auto">
+            <h3 className="text-xl sm:text-2xl font-poppins font-bold text-gradient mb-4">
+              Still need help?
+            </h3>
+            <p className="text-sm sm:text-base text-muted-foreground mb-6">
+              Our AI assistant is available 24/7, or you can reach out to our
+              student support team on WhatsApp!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => router.push("/chatbot")}
+                className="px-6 py-3 bg-gradient-to-r from-campus-purple to-campus-orange text-white rounded-lg font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
+              >
+                <Bot height={20} width={20} />
+                Ask AI Assistant
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FAQ;
