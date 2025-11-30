@@ -15,7 +15,7 @@ interface NavItem {
   isRoute?: boolean;
 }
 
-export const Navbar = () => {
+export const Navbar = async () => {
   const router = useRouter();
   const pathname = usePathname();
   const { user, signOut } = useAuth();

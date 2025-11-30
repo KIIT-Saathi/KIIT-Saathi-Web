@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Heart, Box, Bot } from "lucide-react";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
-import kiitMascot from "@/assets/kiit-mascot.png";
+import kiitMascot from "@/assets/kiit-mascot.jpg";
 import KiitCampus3 from "@/assets/KIIT-University-Camus-3-Library.jpg";
 import heroCampus from "@/assets/KIIT_img.webp";
 import KiitCampus17 from "@/assets/cam17.jpg";

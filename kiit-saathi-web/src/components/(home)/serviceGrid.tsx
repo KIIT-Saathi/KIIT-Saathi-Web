@@ -27,8 +27,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useServiceVisibility } from "@/hooks/useServiceVisibility";
-import { useAuth } from "@/hooks/useAuth";
+// import { useServiceVisibility } from "@/hooks/useServiceVisibility";
+// import { useAuth } from "@/hooks/useAuth";
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -104,9 +104,9 @@ const services = [
 
 const ServicesGrid = () => {
   const router = useRouter();
-  const { user } = useAuth();
-  const { visibleServices, isLoading } = useServiceVisibility();
-  const isAdmin = user?.email === 'adityash8997@gmail.com' || user?.email === '24155598@kiit.ac.in';
+  // const { user } = useAuth();
+  // const { visibleServices, isLoading } = useServiceVisibility();
+  // const isAdmin = user?.email === 'adityash8997@gmail.com' || user?.email === '24155598@kiit.ac.in';
 
   const handleServiceClick = (service: any) => {
     if (service.action) {

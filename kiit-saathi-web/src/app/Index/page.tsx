@@ -1,7 +1,7 @@
 'use client';
 import { Navbar } from "@/components/Navbar";
 import { Hero}  from "@/components/(home)/hero";
-import  ServicesGrid  from "@/components/(home)/serviceGrid";
+// import  ServicesGrid  from "@/components/(home)/serviceGrid";
 import  {Testimonials } from "@/components/(home)/testimonials";
 import  FAQ  from "@/components/(home)/FAQ";
 import { Footer } from "@/components/Footer";
@@ -100,9 +100,9 @@ export default function Home() {
 
       <div className="bg-gradient-to-br from-kiit-green-soft to-white/10">
         {/* Services Section */}
-        <section id="services" className="py-0 my-auto ">
+        {/* <section id="services" className="py-0 my-auto ">
           <ServicesGrid />
-        </section>
+        </section> */}
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-8 sm:py-12 lg:py-16">
