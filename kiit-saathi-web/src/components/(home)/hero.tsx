@@ -9,12 +9,12 @@ import heroCampus from "@/assets/KIIT_img.webp";
 import KiitCampus17 from "@/assets/cam17.jpg";
 import KiiTSchoolofArch from "@/assets/KIIT-School-of-Architecture-Planning-.jpg";
 import KiitAbout from "@/assets/About-kiit.jpg";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 import { useRef, useEffect, useState, useMemo } from "react";
 
 export const Hero = () => {
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [ripples, setRipples] = useState<Array<{
     id: number;
     x: number;
@@ -198,7 +198,7 @@ export const Hero = () => {
               Explore Services
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            {!user && (
+            {/* {!user && (
               <Button
                 variant="outline"
                 size="lg"
@@ -208,7 +208,7 @@ export const Hero = () => {
                 Get Started
                 <Smartphone className="ml-2 w-5 h-5" />
               </Button>
-            )}
+            )} */}
           </div>
 
           {/* Quick Stats */}

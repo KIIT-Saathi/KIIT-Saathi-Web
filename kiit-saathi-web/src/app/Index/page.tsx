@@ -34,7 +34,7 @@ const contactFormSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
-export default function (home)() {
+export default function Home() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -309,8 +309,8 @@ export default function (home)() {
       </section>
 
       <Footer />
-      <ChatBot />
-      <AdminCommandExecutor />
+      {/* <ChatBot />
+      <AdminCommandExecutor /> */}
     </div>
   );
 }
