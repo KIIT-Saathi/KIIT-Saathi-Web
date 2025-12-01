@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/(home)/hero";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { Testimonials } from "@/components/(home)/testimonials";
-import { FAQ } from "@/components/(home)/FAQ";
+import  FAQ  from "@/components/(home)/FAQ";
 import { Footer } from "@/components/Footer";
 import { ChatBot } from "@/components/(home)/ChatBot";
 import { NotificationBell } from "@/components/(home)/NotificationBell";
@@ -24,6 +24,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useEffect } from "react";
 import  InspirationSection  from "@/components/(home)/inspiration"
+import { useRouter } from "next/navigation";
+
+
 
 const contactFormSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -37,9 +40,10 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const Index = () => {
   const { toast } = useToast();
+    const router = useRouter();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
