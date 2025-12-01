@@ -7,7 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 // import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import Image from 'next/image';
-import kiitMascot from "@/assets/kiit-mascot.jpg";
+const kiitMascot = "/assets/kiit-mascot.jpg";
 
 interface NavItem {
   label: string;
@@ -18,9 +18,13 @@ interface NavItem {
 export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, signOut } = useAuth();
+  // const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  
+  // Temporary mock values until auth is implemented
+  const user: { email: string } | null = null;
+  const signOut = async () => {};
 
   // Check if current user is admin
   const isAdmin = user?.email === 'adityash8997@gmail.com' || user?.email === '24155598@kiit.ac.in';
@@ -28,11 +32,11 @@ export const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      toast.success("Successfully signed out");
+      // toast.success("Successfully signed out");
       // Force redirect after sign out
       router.push("/auth");
     } catch (error) {
-      toast.error("Error signing out");
+      // toast.error("Error signing out");
       console.error("Sign out error:", error);
     }
   };

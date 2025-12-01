@@ -1,4 +1,4 @@
-import Index from "@/app/(home)/Index"; // Adjust import path
+import Index from "@/app/Index/page"; // Adjust import path
 
 export default function Home() {
   return <Index />;

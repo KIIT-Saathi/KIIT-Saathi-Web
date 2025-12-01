@@ -1,14 +1,15 @@
-'use client';
+"use client"
+
 import { Navbar } from "@/components/Navbar";
-import { Hero}  from "@/components/(home)/hero";
-import  ServicesGrid  from "@/components/(home)/serviceGrid";
-import  {Testimonials } from "@/components/(home)/testimonials";
-import  FAQ  from "@/components/(home)/FAQ";
+import { Hero } from "@/components/(home)/hero";
+import { ServicesGrid } from "@/components/ServicesGrid";
+import { Testimonials } from "@/components/(home)/testimonials";
+import { FAQ } from "@/components/(home)/FAQ";
 import { Footer } from "@/components/Footer";
-// import { ChatBot } from "@/components/ChatBot";
-// import { NotificationBell } from "@/components/NotificationBell";
-// import { AdminCommandExecutor } from "@/components/admin/AdminCommandExecutor";
-import MeetOurTeam from "@/components/(home)/meetOurTeam";
+import { ChatBot } from "@/components/(home)/ChatBot";
+import { NotificationBell } from "@/components/(home)/NotificationBell";
+import { AdminCommandExecutor } from "@/components/(home)/AdminCommandExecutor";
+import  MeetOurTeam  from "@/components/(home)/meetOurTeam";
 import OurMentors from "@/components/(home)/ourMentors";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,8 +22,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
-import InspirationSection from "@/components/(home)/inspiration";
+import { useState, useEffect } from "react";
+import  InspirationSection  from "@/components/(home)/inspiration"
 
 const contactFormSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -34,9 +35,10 @@ const contactFormSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
-export default function (home:any) {
+const Index = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -49,56 +51,59 @@ export default function (home:any) {
     },
   });
 
-  const HOSTED_URL = process.env.NEXT_PUBLIC_HOSTED_URL;
 
-  const handleContactSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
-    try {
-      const res = await fetch(`${HOSTED_URL}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+const handleContactSubmit = async (data: ContactFormData) => {
+  setIsSubmitting(true);
+  try {
+    const res = await fetch(`${HOSTED_URL}/api/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
-      if (!res.ok) {
-        let errorMessage = `Server error: ${res.status}`;
-        try {
-          const errorData = await res.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch {
-          errorMessage = res.statusText || errorMessage;
-        }
-        throw new Error(errorMessage);
+    if (!res.ok) {
+      let errorMessage = `Server error: ${res.status}`;
+      try {
+        const errorData = await res.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch {
+        errorMessage = res.statusText || errorMessage;
       }
-
-      toast({
-        title: "Message Sent!",
-        description: `Thanks, we'll get back to you soon.`,
-      });
-
-      form.reset();
-    } catch (error) {
-      console.error("Contact form error:", error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to send message.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+      throw new Error(errorMessage);
     }
-  };
+
+    toast({
+      title: "Message Sent!",
+      description: `Thanks, we'll get back to you soon.`,
+    });
+
+    form.reset();
+  } catch (error) {
+    console.error("Contact form error:", error);
+    toast({
+      title: "Error",
+      description: error instanceof Error ? error.message : "Failed to send message.",
+      variant: "destructive",
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
 
   return (
     <div className="relative min-h-screen">
       <Navbar />
-      {/* <div className="fixed top-20 right-4 sm:right-8 lg:right-14 z-[10000] ">
+      <div className="fixed top-20 right-4 sm:right-8 lg:right-14 z-[10000] ">
         <NotificationBell />
-      </div> */}
+      </div>
       <Hero />
-      <InspirationSection />
+      <InspirationSection/>
+
 
       <div className="bg-gradient-to-br from-kiit-green-soft to-white/10">
+
         {/* Services Section */}
         <section id="services" className="py-0 my-auto ">
           <ServicesGrid />
@@ -309,7 +314,10 @@ export default function (home:any) {
       </section>
 
       <Footer />
-     
+      <ChatBot />
+      <AdminCommandExecutor />
     </div>
   );
-}
+};
+
+export default Index;

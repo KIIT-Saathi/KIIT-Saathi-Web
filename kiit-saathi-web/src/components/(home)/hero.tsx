@@ -3,17 +3,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Heart, Box, Bot } from "lucide-react";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
-import KiitCampus3 from "@/assets/KIIT-University-Camus-3-Library.jpg";
-import heroCampus from "@/assets/KIIT_img.webp";
-import KiitCampus17 from "@/assets/cam17.jpg";
-import KiiTSchoolofArch from "@/assets/KIIT-School-of-Architecture-Planning-.jpg";
-import KiitAbout from "@/assets/About-kiit.jpg";
-import { useAuth } from "@/hooks/useAuth";
+const KiitCampus3 = "/assets/KIIT-University-Camus-3-Library.jpg";
+const heroCampus = "/assets/KIIT_img.webp";
+const KiitCampus17 = "/assets/cam17.jpg";
+const KiiTSchoolofArch = "/assets/KIIT-School-of-Architecture-Planning-.jpg";
+const KiitAbout = "/assets/About-kiit.jpg";
+// import { useAuth } from "@/hooks/useAuth";
 import { useRef, useEffect, useState, useMemo } from "react";
+
+const kiitMascot = "/assets/kiit-mascot.jpg";
 
 export const Hero = () => {
   const router = useRouter();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const [ripples, setRipples] = useState<Array<{
     id: number;
     x: number;
@@ -132,7 +134,7 @@ export const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden" ref={heroRef}>
+    <section id="home" className="relative min-h-screen overflow-hidden bg-gradient-to-br from-kiit-green to-campus-blue" ref={heroRef}>
       {/* Interactive Grid Overlay */}
       <div ref={gridRef} className="absolute inset-0 pointer-events-none">
         {gridCells.map((index) => {
@@ -197,7 +199,7 @@ export const Hero = () => {
               Explore Services
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            {!user && (
+            {/* {!user && (
               <Button
                 variant="outline"
                 size="lg"
@@ -207,7 +209,7 @@ export const Hero = () => {
                 Get Started
                 <Smartphone className="w-5 h-5 ml-2" />
               </Button>
-            )}
+            )} */}
           </div>
 
           {/* Quick Stats */}

@@ -14,6 +14,41 @@ interface TeamMember {
   Github?: string;
 }
 
+// Temporary team data until the actual data file is available
+const teamData: TeamMember[] = [
+  {
+    id: 1,
+    name: "Aditya Sharma",
+    role: "Founder & CEO",
+    LinkedIn: "https://linkedin.com/in/adityasharma",
+    Instagram: "https://instagram.com/adityasharma",
+    Github: "https://github.com/adityasharma"
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    role: "CTO",
+    LinkedIn: "https://linkedin.com/in/johndoe",
+    Instagram: "https://instagram.com/johndoe",
+    Github: "https://github.com/johndoe"
+  },
+  {
+    id: 3,
+    name: "Jane Smith",
+    role: "Lead Developer",
+    LinkedIn: "https://linkedin.com/in/janesmith",
+    Instagram: "https://instagram.com/janesmith",
+    Github: "https://github.com/janesmith"
+  },
+  {
+    id: 4,
+    name: "Mike Johnson",
+    role: "UI/UX Designer",
+    LinkedIn: "https://linkedin.com/in/mikejohnson",
+    Instagram: "https://instagram.com/mikejohnson"
+  }
+];
+
 const TeamCard = ({ member }: { member: TeamMember }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -32,7 +67,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
         <div className="hover:cursor-pointer hover:kiit-green-soft absolute inset-0 [backface-visibility:hidden] rounded-xl sm:rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-lg">
           <div className="flex flex-col items-center justify-center h-full p-4 sm:p-6">
             {/* Image */}
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden mb-3 sm:mb-4 bg-gray-200">
+            <div className="relative w-32 h-32 mb-3 overflow-hidden bg-gray-200 rounded-full sm:w-40 sm:h-40 sm:mb-4">
               {!imageError && member.Image ? (
                 <Image
                   src={member.Image}
@@ -40,11 +75,11 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                   onError={() => setImageError(true)}
                   width={160}
                   height={160}
-                  className="w-full h-full object-cover border border-gray-300"
+                  className="object-cover w-full h-full border border-gray-300"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-400">
-                  <span className="text-white text-4xl font-bold">
+                <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-blue-400 to-purple-400">
+                  <span className="text-4xl font-bold text-white">
                     {member.name.charAt(0)}
                   </span>
                 </div>
@@ -52,7 +87,7 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
             </div>
 
             {/* Member info */}
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 text-center">
+            <h3 className="text-base font-semibold text-center text-gray-800 sm:text-lg md:text-xl">
               {member.name}
             </h3>
           </div>
@@ -60,19 +95,19 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
 
         {/* BACK FACE */}
         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl sm:rounded-2xl bg-kiit-green-light overflow-hidden shadow-lg shadow-kiit-green-dark">
-          <div className="flex flex-col items-center justify-center h-full p-4 sm:p-6 text-white">
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden mb-3 sm:mb-4 bg-gray-200">
+          <div className="flex flex-col items-center justify-center h-full p-4 text-white sm:p-6">
+            <div className="relative w-32 h-32 mb-3 overflow-hidden bg-gray-200 rounded-full sm:w-40 sm:h-40 sm:mb-4">
               {/* Back face image placeholder or repeat front if needed */}
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-400">
-                <span className="text-white text-4xl font-bold">
+              <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-blue-400 to-purple-400">
+                <span className="text-4xl font-bold text-white">
                   {member.name.charAt(0)}
                 </span>
               </div>
             </div>
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-center mb-4">
+            <h3 className="mb-4 text-base font-semibold text-center sm:text-lg md:text-xl">
               {member.name}
             </h3>
-            <p className="text-sm text-center mb-4 opacity-90">
+            <p className="mb-4 text-sm text-center opacity-90">
               {member.role || 'Team Member'}
             </p>
             <div className="flex items-center gap-4">
@@ -81,10 +116,10 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                   href={member.LinkedIn}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transform hover:scale-125 transition-transform duration-200"
+                  className="transition-transform duration-200 transform hover:scale-125"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Linkedin className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white hover:text-gray-200" />
+                  <Linkedin className="w-6 h-6 text-white sm:w-7 sm:h-7 md:w-8 md:h-8 hover:text-gray-200" />
                 </a>
               )}
               {member.Instagram && (
@@ -92,10 +127,10 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                   href={member.Instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transform hover:scale-125 transition-transform duration-200"
+                  className="transition-transform duration-200 transform hover:scale-125"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Instagram className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white hover:text-gray-200" />
+                  <Instagram className="w-6 h-6 text-white sm:w-7 sm:h-7 md:w-8 md:h-8 hover:text-gray-200" />
                 </a>
               )}
               {member.Github && (
@@ -103,10 +138,10 @@ const TeamCard = ({ member }: { member: TeamMember }) => {
                   href={member.Github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transform hover:scale-125 transition-transform duration-200"
+                  className="transition-transform duration-200 transform hover:scale-125"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Github className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white hover:text-gray-200" />
+                  <Github className="w-6 h-6 text-white sm:w-7 sm:h-7 md:w-8 md:h-8 hover:text-gray-200" />
                 </a>
               )}
             </div>
@@ -129,23 +164,23 @@ const MeetOurTeam: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-3 sm:px-4 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="relative px-3 py-12 overflow-hidden sm:py-16 md:py-20 lg:py-24 sm:px-4 bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Background decorations */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-48 h-48 sm:w-72 sm:h-72 bg-blue-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-64 h-64 sm:w-96 sm:h-96 bg-purple-200/20 rounded-full blur-3xl" />
+        <div className="absolute w-48 h-48 rounded-full top-20 left-10 sm:w-72 sm:h-72 bg-blue-200/20 blur-3xl" />
+        <div className="absolute w-64 h-64 rounded-full bottom-20 right-10 sm:w-96 sm:h-96 bg-purple-200/20 blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] bg-pink-200/10 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto">
-        <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="relative mx-auto max-w-7xl">
+        <div className="container relative z-10 max-w-6xl mx-auto">
           {/* Heading */}
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent px-4">
+          <div className="mb-8 text-center sm:mb-12">
+            <h2 className="px-4 mb-2 text-2xl font-bold text-transparent sm:text-3xl md:text-4xl lg:text-5xl sm:mb-3 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text">
               Meet Our Team
             </h2>
-            <p className="text-muted-foreground text-base sm:text-lg italic px-4">
+            <p className="px-4 text-base italic text-muted-foreground sm:text-lg">
               Helping you connect with the best.
             </p>
           </div>
