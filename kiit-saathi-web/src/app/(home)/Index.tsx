@@ -34,7 +34,7 @@ const contactFormSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
-export default function (home)() {
+export default function (home:any) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -90,7 +90,7 @@ export default function (home)() {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="relative min-h-screen">
       <Navbar />
       {/* <div className="fixed top-20 right-4 sm:right-8 lg:right-14 z-[10000] ">
         <NotificationBell />
@@ -106,36 +106,36 @@ export default function (home)() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-8 sm:py-12 lg:py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl sm:text-4xl font-poppins font-bold text-gradient mb-6">
+          <div className="container px-4 mx-auto text-center">
+            <h2 className="mb-6 text-3xl font-bold sm:text-4xl font-poppins text-gradient">
               How KIIT Saathi Works
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
+            <p className="max-w-2xl px-4 mx-auto mb-8 text-base sm:text-lg text-muted-foreground sm:mb-12">
               Your campus life made easier in just a few simple steps
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              <div className="text-center px-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl sm:text-2xl font-bold">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8">
+              <div className="px-4 text-center">
+                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 text-xl font-bold text-white rounded-full sm:w-16 sm:h-16 bg-gradient-primary sm:text-2xl">
                   1
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">Choose Your Service</h3>
+                <h3 className="mb-2 text-lg font-semibold sm:text-xl">Choose Your Service</h3>
                 <p className="text-sm sm:text-base text-muted-foreground">Browse through our campus services and select what you need</p>
               </div>
 
-              <div className="text-center px-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl sm:text-2xl font-bold">
+              <div className="px-4 text-center">
+                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 text-xl font-bold text-white rounded-full sm:w-16 sm:h-16 bg-gradient-primary sm:text-2xl">
                   2
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">Connect & Request</h3>
+                <h3 className="mb-2 text-lg font-semibold sm:text-xl">Connect & Request</h3>
                 <p className="text-sm sm:text-base text-muted-foreground">Get connected with verified students or service providers instantly</p>
               </div>
 
-              <div className="text-center px-4">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl sm:text-2xl font-bold">
+              <div className="px-4 text-center">
+                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 text-xl font-bold text-white rounded-full sm:w-16 sm:h-16 bg-gradient-primary sm:text-2xl">
                   3
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold mb-2">Get It Done</h3>
+                <h3 className="mb-2 text-lg font-semibold sm:text-xl">Get It Done</h3>
                 <p className="text-sm sm:text-base text-muted-foreground">Enjoy hassle-free campus services with trusted fellow students</p>
               </div>
             </div>
@@ -165,35 +165,35 @@ export default function (home)() {
 
       {/* Contact Section */}
       <section id="contact" className="py-8 sm:py-12 lg:py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-poppins font-bold text-gradient mb-6">
+        <div className="container px-4 mx-auto">
+          <div className="mb-8 text-center sm:mb-12">
+            <h2 className="mb-6 text-3xl font-bold sm:text-4xl font-poppins text-gradient">
               Get In Touch
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            <p className="max-w-2xl px-4 mx-auto text-base sm:text-lg text-muted-foreground">
               Have questions? We're here to help make your campus life better
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
+          <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto lg:grid-cols-2 sm:gap-12">
             {/* Contact Info */}
-            <div className="space-y-6 sm:space-y-8 mb-8 lg:mb-0">
-              <div className="flex items-start sm:items-center gap-4 px-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div className="mb-8 space-y-6 sm:space-y-8 lg:mb-0">
+              <div className="flex items-start gap-4 px-4 sm:items-center">
+                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full sm:w-12 sm:h-12 bg-gradient-primary">
+                  <Mail className="w-5 h-5 text-white sm:w-6 sm:h-6" />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-base sm:text-lg">Email Us</h3>
-                  <p className="text-sm sm:text-base text-muted-foreground break-all">official@kiitsaathi.in</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold sm:text-lg">Email Us</h3>
+                  <p className="text-sm break-all sm:text-base text-muted-foreground">official@kiitsaathi.in</p>
                 </div>
               </div>
               
-              <div className="flex items-start sm:items-center gap-4 px-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="flex items-start gap-4 px-4 sm:items-center">
+                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 rounded-full sm:w-12 sm:h-12 bg-gradient-primary">
+                  <MapPin className="w-5 h-5 text-white sm:w-6 sm:h-6" />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-base sm:text-lg">Visit Us</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold sm:text-lg">Visit Us</h3>
                   <p className="text-sm sm:text-base text-muted-foreground">KIIT University, Bhubaneswar, Odisha</p>
                 </div>
               </div>
@@ -202,7 +202,7 @@ export default function (home)() {
             {/* Contact Form */}
             <Card className="glass-card">
               <CardHeader>
-                <CardTitle className="text-gradient flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-gradient">
                   <Mail className="w-5 h-5" />
                   Contact Us
                 </CardTitle>
@@ -286,7 +286,7 @@ export default function (home)() {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full gradient-primary text-white font-semibold py-3 text-base"
+                      className="w-full py-3 text-base font-semibold text-white gradient-primary"
                     >
                       {isSubmitting ? (
                         <>
@@ -309,8 +309,7 @@ export default function (home)() {
       </section>
 
       <Footer />
-      <ChatBot />
-      <AdminCommandExecutor />
+     
     </div>
   );
 }

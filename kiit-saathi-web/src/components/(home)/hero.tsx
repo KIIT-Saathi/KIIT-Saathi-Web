@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Smartphone, Heart, Box, Bot } from "lucide-react";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
-import kiitMascot from "@/assets/kiit-mascot.png";
 import KiitCampus3 from "@/assets/KIIT-University-Camus-3-Library.jpg";
 import heroCampus from "@/assets/KIIT_img.webp";
 import KiitCampus17 from "@/assets/cam17.jpg";
@@ -142,7 +141,7 @@ export const Hero = () => {
           return (
             <div
               key={index}
-              className="absolute bg-transparent border border-transparent hover:border-kiit-green/20 transition-colors duration-100"
+              className="absolute transition-colors duration-100 bg-transparent border border-transparent hover:border-kiit-green/20"
               style={{
                 left: `${col * cellSize}px`,
                 top: `${row * cellSize}px`,
@@ -158,26 +157,26 @@ export const Hero = () => {
       {ripples.map((ripple) => (
         <div
           key={ripple.id}
-          className="absolute w-4 h-4 bg-kiit-green rounded-full pointer-events-none animate-ping"
+          className="absolute w-4 h-4 rounded-full pointer-events-none bg-kiit-green animate-ping"
           style={{ left: ripple.x, top: ripple.y }}
         />
       ))}
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between min-h-screen px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="relative z-10 flex flex-col items-center justify-between min-h-screen px-4 py-12 lg:flex-row sm:px-6 lg:px-8 lg:py-16">
         {/* Left Content */}
-        <div className="flex-1 text-center lg:text-left mb-8 lg:mb-0 lg:pr-12">
-          <div className="inline-flex items-center gap-3 mb-8 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+        <div className="flex-1 mb-8 text-center lg:text-left lg:mb-0 lg:pr-12">
+          <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 rounded-full bg-white/20 backdrop-blur-sm">
             <Image src={kiitMascot} alt="KIIT Mascot" width={48} height={48} className="rounded-full" />
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-poppins font-bold text-white drop-shadow-lg">
+              <h1 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl font-poppins drop-shadow-lg">
                 KIIT Saathi
               </h1>
-              <p className="text-white/80 text-sm font-medium">Your Campus Companion</p>
+              <p className="text-sm font-medium text-white/80">Your Campus Companion</p>
             </div>
           </div>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-poppins font-bold text-white mb-6 leading-tight drop-shadow-2xl">
+          <h2 className="mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl font-poppins drop-shadow-2xl">
             Making KIIT Life
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-kiit-green via-fedkiit-green to-campus-blue">
               Easier, One Service
@@ -185,52 +184,52 @@ export const Hero = () => {
             at a Time
           </h2>
 
-          <p className="text-xl sm:text-2xl lg:text-3xl text-white/90 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed drop-shadow-lg">
+          <p className="max-w-lg mx-auto mb-8 text-xl leading-relaxed sm:text-2xl lg:text-3xl text-white/90 lg:mx-0 drop-shadow-lg">
             Your favorite senior in app form. Study materials, lost & found, society events, food coupons, and more - all in one place.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
             <Button
               size="lg"
               onClick={handleExplore}
-              className="gradient-primary text-white text-lg px-8 py-4 font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform shadow-xl gradient-primary hover:shadow-2xl hover:scale-105"
             >
               Explore Services
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             {!user && (
               <Button
                 variant="outline"
                 size="lg"
                 onClick={handleSignIn}
-                className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm text-lg px-8 py-4 font-semibold"
+                className="px-8 py-4 text-lg font-semibold text-white border-white/30 hover:bg-white/10 backdrop-blur-sm"
               >
                 Get Started
-                <Smartphone className="ml-2 w-5 h-5" />
+                <Smartphone className="w-5 h-5 ml-2" />
               </Button>
             )}
           </div>
 
           {/* Quick Stats */}
-          <div className="mt-12 flex flex-wrap gap-6 justify-center lg:justify-start">
+          <div className="flex flex-wrap justify-center gap-6 mt-12 lg:justify-start">
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1 drop-shadow-lg">10+</div>
-              <div className="text-white/70 text-sm sm:text-base font-medium">Campus Services</div>
+              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">10+</div>
+              <div className="text-sm font-medium text-white/70 sm:text-base">Campus Services</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1 drop-shadow-lg">24/7</div>
-              <div className="text-white/70 text-sm sm:text-base font-medium">AI Assistant</div>
+              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">24/7</div>
+              <div className="text-sm font-medium text-white/70 sm:text-base">AI Assistant</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1 drop-shadow-lg">100K+</div>
-              <div className="text-white/70 text-sm sm:text-base font-medium">Students Helped</div>
+              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">100K+</div>
+              <div className="text-sm font-medium text-white/70 sm:text-base">Students Helped</div>
             </div>
           </div>
         </div>
 
         {/* Right Image Slider */}
-        <div className="flex-1 relative max-w-md lg:max-w-lg xl:max-w-xl mx-auto lg:mx-0">
-          <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+        <div className="relative flex-1 max-w-md mx-auto lg:max-w-lg xl:max-w-xl lg:mx-0">
+          <div className="relative overflow-hidden shadow-2xl rounded-3xl">
             <div
               className="flex transition-transform duration-1000 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -240,7 +239,7 @@ export const Hero = () => {
                 <Image 
                   key={idx} 
                   src={src} 
-                  className="w-full flex-shrink-0 object-cover" 
+                  className="flex-shrink-0 object-cover w-full" 
                   alt={`KIIT Campus ${idx + 1}`}
                   width={500}
                   height={400}
@@ -252,7 +251,7 @@ export const Hero = () => {
               <Image 
                 key="clone-first" 
                 src={slides[0]} 
-                className="w-full flex-shrink-0 object-cover" 
+                className="flex-shrink-0 object-cover w-full" 
                 alt="KIIT Campus"
                 width={500}
                 height={400}
