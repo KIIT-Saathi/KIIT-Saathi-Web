@@ -115,7 +115,7 @@ const handleContactSubmit = async (data: ContactFormData) => {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="py-8 sm:py-12 lg:py-16">
-          <div className="container px-4 mx-auto text-center">
+<div className="w-full px-4 text-center">
             <h2 className="mb-6 text-3xl font-bold sm:text-4xl font-poppins text-gradient">
               How KIIT Saathi Works
             </h2>
@@ -174,7 +174,7 @@ const handleContactSubmit = async (data: ContactFormData) => {
 
       {/* Contact Section */}
       <section id="contact" className="py-8 sm:py-12 lg:py-16">
-        <div className="container px-4 mx-auto">
+<div className="w-full px-4">
           <div className="mb-8 text-center sm:mb-12">
             <h2 className="mb-6 text-3xl font-bold sm:text-4xl font-poppins text-gradient">
               Get In Touch

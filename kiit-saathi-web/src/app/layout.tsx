@@ -1,26 +1,24 @@
-"use client";
-
-import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "@/hooks/use-auth";  // <-- IMPORTANT
-import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import { Providers } from "./providers";
 
-const queryClient = new QueryClient();
+export const metadata = {
+  title: "KIIT Saathi",
+  description: "One platform for all campus needs",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  
-
   return (
     <html lang="en">
-      <body>
-        <QueryClientProvider client={queryClient}>
-          {/* 🔥 Your entire app MUST be wrapped here */}
-          <AuthProvider>
-            {children}
-            <Toaster />
-          </AuthProvider>
-        </QueryClientProvider>
+      <body className="bg-background text-foreground font-inter">
+
+        {/* EXACT REPLACEMENT FOR VITE #root */}
+        <div
+          id="root"
+          className="max-w-[1290px] mx-auto overflow-hidden"
+        >
+          <Providers>{children}</Providers>
+        </div>
+
       </body>
     </html>
   );
