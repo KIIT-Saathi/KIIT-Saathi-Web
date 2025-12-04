@@ -1,13 +1,10 @@
-'use client';
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, LogIn, Home, LogOut, User, Shield } from "lucide-react";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-// import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
-import Image from 'next/image';
-const kiitMascot = "/assets/kiit-mascot.jpg";
+import Image from "next/image";
 
 interface NavItem {
   label: string;
@@ -17,26 +14,23 @@ interface NavItem {
 
 export const Navbar = () => {
   const router = useRouter();
-  const pathname = usePathname();
-  // const { user, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  
-  // Temporary mock values until auth is implemented
-  const user: { email: string } | null = null;
-  const signOut = async () => {};
 
   // Check if current user is admin
   const isAdmin = user?.email === 'adityash8997@gmail.com' || user?.email === '24155598@kiit.ac.in';
 
+
+
   const handleSignOut = async () => {
     try {
       await signOut();
-      // toast.success("Successfully signed out");
+      toast.success("Successfully signed out");
       // Force redirect after sign out
-      router.push("/auth");
+      window.location.href = "/auth";
     } catch (error) {
-      // toast.error("Error signing out");
+      toast.error("Error signing out");
       console.error("Sign out error:", error);
     }
   };
@@ -58,7 +52,7 @@ export const Navbar = () => {
       return;
     }
     
-    if (pathname !== "/") {
+    if (location.pathname !== "/") {
       router.push("/");
       setTimeout(() => {
         const element = document.querySelector(href);
@@ -83,7 +77,7 @@ export const Navbar = () => {
 
   // Scroll spy functionality
   useEffect(() => {
-    if (pathname !== "/"){
+    if (location.pathname !== "/"){
       setActiveSection("home")
        return;
     }
@@ -119,7 +113,7 @@ export const Navbar = () => {
         }
       });
     };
-  }, [pathname, navItems]);
+  }, [location.pathname, navItems]);
 
   const isActive = (href: string) => {
     const sectionId = href.substring(1);
@@ -136,11 +130,11 @@ export const Navbar = () => {
             onClick={() => router.push("/")}
           >
             <Image
-              src={kiitMascot}
+              src="/assets/kiit-mascot.jpg"
               alt="KIIT Saathi Mascot"
               width={44}
               height={44}
-              className="animate-pulse rounded-full"
+              className="w-11 h-11 animate-pulse rounded-full"
             />
             <div className="font-poppins font-bold text-lg sm:text-xl lg:text-3xl text-white-700 drop-shadow-lg">
               KIIT Saathi
@@ -162,56 +156,49 @@ export const Navbar = () => {
               >
                 {item.label}
                 {isActive(item.href) && (
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-white rounded-full" />
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-primary rounded-full"></div>
                 )}
               </button>
             ))}
+          </div>
 
-            {/* Auth Buttons */}
-            <div className="flex items-center gap-2">
-              {user ? (
-                <>
-                  {isAdmin && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        router.push("/admin-dashboard");
-                      }}
-                      className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/30"
-                    >
-                      <Shield className="w-4 h-4 mr-2" />
-                      Admin
-                    </Button>
-                  )}
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-4">
+            {user ? (
+              <>
+                {isAdmin && (
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => router.push("/order-history")}
-                    className="bg-black/10 hover:text-black transition-all duration-300 gap-2 px-3 rounded-full py-4"
+                    onClick={() => router.push("/admin-dashboard")}
+                    className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white font-semibold transition-all duration-300 gap-2 px-4 py-2 rounded-full shadow-lg hover:shadow-xl hover:scale-105"
                   >
-                    <User className="w-6 h-6 " />
+                    <Shield className="w-4 h-4" />
+                    Admin Dashboard
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleSignOut}
-                    className="bg-black/10 hover:text-black transition-all duration-300 gap-2 px-2 rounded-full py-4 "
-                  >
-                    <LogOut className="w-6 h-6 mr-2" />
+                )}
+                <Button onClick={() => router.push("/order-history")} 
+                  className="bg-black/10 hover:text-black transition-all duration-300 gap-2 px-3 rounded-full py-4">
+                  <User className="w-6 h-6 " />
+                  {/* {user.email} */}
                   </Button>
-                </>
-              ) : (
                 <Button
+                  variant="ghost"
                   size="sm"
-                  onClick={() => router.push("/auth")}
-                  className="gradient-primary text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  onClick={handleSignOut}
+                  className="bg-black/10 hover:text-black transition-all duration-300 gap-2 px-2 rounded-full py-4 "
                 >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  Sign In
+                  <LogOut className="w-6 h-6 mr-2" />
                 </Button>
-              )}
-            </div>
+              </>
+            ) : (
+              <Button
+                size="sm"
+                onClick={() => router.push("/auth")}
+                className="gradient-primary text-white font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <LogIn className="w-4 h-4 mr-2" />
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -226,6 +213,21 @@ export const Navbar = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden border-t border-white/20 py-4 space-y-2 backdrop-blur-sm">
+            {/* <button
+              onClick={() => {
+                navigate("/");
+                setIsOpen(false);
+                setActiveSection("home");
+              }}
+              className={`w-full text-left px-4 py-3 rounded-lg transition-colors font-medium flex items-center gap-3 ${
+                isActive("#home")
+                  ? "text-black bg-white/40"
+                  : "text-white hover:text-kiit-green hover:bg-kiit-green/5"
+              }`}
+            >
+              
+            </button> */}
+
             {navItems.map((item) => (
               <button
                 key={item.label}

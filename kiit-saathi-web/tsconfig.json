@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/app/api/lostfound/has-paid-lost-found-contact/route.js"  ],
   "exclude": [
     "node_modules"
   ]
