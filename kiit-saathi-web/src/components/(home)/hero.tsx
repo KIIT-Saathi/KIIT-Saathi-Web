@@ -166,7 +166,7 @@ export const Hero = () => {
       ))}
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-between min-h-screen px-4 py-12 lg:flex-row sm:px-6 lg:px-8 lg:py-16">
+<div className="relative z-10 flex flex-col items-center justify-between min-h-screen py-12 lg:flex-row lg:py-16 w-full">
         {/* Left Content */}
         <div className="flex-1 mb-8 text-center lg:text-left lg:mb-0 lg:pr-12">
           <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 rounded-full bg-white/20 backdrop-blur-sm">

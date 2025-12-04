@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { createServerClient } from "@/lib/supabaseServer";
-
+import {createServerClient} from "@/lib/supabaseServer";
 export async function GET() {
   try {
     const supabase = createServerClient();
