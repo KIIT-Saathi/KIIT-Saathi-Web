@@ -24,7 +24,7 @@ import { DataTable } from "@/components/study-materials/DataTable"
 import { TabNavigation } from "@/components/study-materials/TabNavigation";
 import  StudyMaterialUploadDialog  from "../../components/study-materials/StudyMaterialUploadDialog";
 import { toast } from "sonner";
-import { semesters, years, semesterSubjects } from "./data/studyMaterials";
+import { semesters, years, semesterSubjects } from "../data/studyMaterials";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";

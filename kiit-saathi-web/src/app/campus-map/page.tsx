@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, MapPin, FileText, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { campusLocations } from '@/app/study-material/data/campusLocations';
+import { campusLocations } from '@/app/data/campusLocations';
 import { useRouter } from 'next/navigation';
 
 const CampusMapsPage: React.FC = () => {

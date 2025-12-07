@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Navigation, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { campusLocations, CampusLocation } from "@/app/study-material/data/campusLocations";
+import { campusLocations, CampusLocation } from "@/app/data/campusLocations";
 
 export default function CampusMapView({ params }) {
   const router = useRouter();
