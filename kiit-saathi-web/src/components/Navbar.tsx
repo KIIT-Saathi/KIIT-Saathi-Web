@@ -52,7 +52,7 @@ export const Navbar = () => {
       return;
     }
     
-    if (location.pathname !== "/") {
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
       router.push("/");
       setTimeout(() => {
         const element = document.querySelector(href);
@@ -77,7 +77,9 @@ export const Navbar = () => {
 
   // Scroll spy functionality
   useEffect(() => {
-    if (location.pathname !== "/"){
+    if (typeof window === "undefined") return;
+    
+    if (window.location.pathname !== "/"){
       setActiveSection("home")
        return;
     }
@@ -113,7 +115,7 @@ export const Navbar = () => {
         }
       });
     };
-  }, [location.pathname, navItems]);
+  }, [navItems]);
 
   const isActive = (href: string) => {
     const sectionId = href.substring(1);
@@ -213,20 +215,7 @@ export const Navbar = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden border-t border-white/20 py-4 space-y-2 backdrop-blur-sm">
-            {/* <button
-              onClick={() => {
-                navigate("/");
-                setIsOpen(false);
-                setActiveSection("home");
-              }}
-              className={`w-full text-left px-4 py-3 rounded-lg transition-colors font-medium flex items-center gap-3 ${
-                isActive("#home")
-                  ? "text-black bg-white/40"
-                  : "text-white hover:text-kiit-green hover:bg-kiit-green/5"
-              }`}
-            >
-              
-            </button> */}
+           
 
             {navItems.map((item) => (
               <button
