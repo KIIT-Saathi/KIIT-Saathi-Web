@@ -1,7 +1,414 @@
+/* app/globals.css - NEXTJS VERSION */
+
+/* 1. Import fonts at the VERY TOP (outside @layer) */
+
+/* 2. Tailwind directives MUST come next */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Load Vite order */
-@import "./index.css";
-@import "./app.css";
+/* 3. Global styles (outside @layer) */
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) hsl(var(--background));
+}
+
+/* 4. Define base layer (CSS variables) */
+@layer base {
+  :root {
+    /* KIIT Brand Colors */
+    --background: 120 15% 97%;
+    --foreground: 210 20% 15%;
+    
+    --kiit-green: 140 60% 45%;
+    --kiit-green-light: 140 55% 65%;
+    --kiit-green-dark: 140 65% 25%;
+    --kiit-green-soft: 140 30% 92%;
+    
+    --campus-blue: 210 80% 55%;
+    --campus-orange: 25 90% 60%;
+    --campus-purple: 270 70% 60%;
+    
+    --kiit-primary: var(--kiit-green);
+    --kiit-secondary: var(--campus-blue);
+    --glass-white: 0 0% 100%;
+    --glass-overlay: 0 0% 100% / 0.1;
+
+    /* Society Colors */
+    --fedkiit-green: 140 82% 55%;
+    --fedkiit-black: 0 0% 0%;
+    --fedkiit-grey: 0 0% 50%;
+    --fedkiit-light-grey: 31 12% 80%;
+    
+    --ecell-black: 0 0% 0%;
+    --ecell-white: 0 0% 100%;
+    --ecell-cyan: 195 100% 50%;
+    
+    --usc-orange: 33 100% 50%;
+    --usc-maroon: 0 100% 27%;
+    --usc-green: 120 61% 34%;
+    --usc-white: 0 0% 100%;
+    --usc-black: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: var(--kiit-green);
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: var(--kiit-green-soft);
+    --secondary-foreground: var(--kiit-green-dark);
+
+    --muted: 140 20% 95%;
+    --muted-foreground: 140 15% 40%;
+
+    --accent: var(--campus-blue);
+    --accent-foreground: 0 0% 100%;
+    
+    /* Gradients as CSS variables (Next.js compatible) */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--kiit-green)) 0%, hsl(var(--campus-blue)) 100%);
+    --gradient-soft: linear-gradient(135deg, hsl(var(--kiit-green-soft)) 0%, hsl(0 0% 100%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--kiit-green)) 0%, white 100%);
+    
+    /* Glassmorphism */
+    --glass-bg: hsl(var(--glass-white) / 0.1);
+    --glass-border: hsl(var(--glass-white) / 0.2);
+    --glass-shadow: 0 8px 32px 0 hsl(var(--kiit-green) / 0.15);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bouncy: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* 5. Apply base styles */
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* 6. Define components layer */
+@layer components {
+  /* Glass morphism components */
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 193, 102, 0.15);
+  }
+  
+  .glass-button {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+  
+  /* Gradient backgrounds */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(140, 60%, 45%) 0%, hsl(210, 80%, 55%) 100%);
+  }
+  
+  .gradient-soft {
+    background: linear-gradient(135deg, hsl(140, 30%, 92%) 0%, hsl(0, 0%, 100%) 100%);
+  }
+  
+  .gradient-hero {
+    background: linear-gradient(135deg, hsl(140, 60%, 45%) 0%, white 100%);
+  }
+  
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Service card styles */
+  .service-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 193, 102, 0.15);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+  
+  /* Text gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(140, 60%, 45%) 0%, hsl(210, 80%, 55%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Add to globals.css in @layer components */
+
+.text-gradient {
+  background: linear-gradient(135deg, hsl(140, 60%, 45%) 0%, hsl(210, 80%, 55%) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+  
+  .text-hero-gradient {
+    background: linear-gradient(135deg, hsl(140, 60%, 45%) 0%, white 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* 7. Keyframes (outside @layer) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+@keyframes dropDown {
+  0% {
+    transform: translateY(-100px) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(10px) scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-5px) scale(0.95);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Media queries (outside @layer) */
+@media (max-width: 768px) {
+  .mobile-calendar .rbc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .mobile-calendar .rbc-toolbar button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  /* Add to @layer components in globals.css */
+
+/* Interactive grid effect */
+.grid-overlay {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@media (max-width: 768px) {
+  .grid-overlay {
+    background-size: 30px 30px;
+  }
+}
+
+.grid-cell:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Ripple animation */
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 500px;
+    height: 500px;
+    opacity: 0;
+  }
+}
+
+.ripple {
+  animation: ripple 0.6s linear;
+}
+
+/* Enhanced gradients */
+.hero-gradient-bg {
+  background: linear-gradient(135deg, 
+    rgba(31, 193, 102, 0.95) 0%, 
+    rgba(0, 123, 255, 0.95) 100%);
+}
+
+/* Text shadow effects */
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+               0 0 40px rgba(31, 193, 102, 0.3);
+}
+
+/* Glass card effect */
+.glass-card-enhanced {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 193, 102, 0.25);
+}
+
+/* Enhanced button */
+.btn-hero {
+  background: linear-gradient(135deg, #1FC166 0%, #007BFF 100%);
+  color: white;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(31, 193, 102, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(31, 193, 102, 0.4);
+}
+}

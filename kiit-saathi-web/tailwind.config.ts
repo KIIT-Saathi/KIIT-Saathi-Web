@@ -12,15 +12,19 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "0rem",          // ✅ FIX: Remove padding to match Vite layout
+      // RESTORED: Vite had 2rem padding. This fixes the content touching the edges.
+      padding: "2rem", 
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        // UPDATED: Now points to the variables defined in your layout.tsx
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
+        // Optional: Make Inter the default sans font so you don't have to add font-inter everywhere
+        sans: ["var(--font-inter)", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

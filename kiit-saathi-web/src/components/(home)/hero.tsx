@@ -1,41 +1,36 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Smartphone, Heart, Box, Bot } from "lucide-react";
-import Image from 'next/image';
-import { useRouter } from "next/navigation";
+import { ArrowRight, Heart } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation"; 
+import { useRef, useEffect, useState, useMemo } from "react";
+import { useAuth } from "@/hooks/use-auth";
+
+// ✅ Images: Direct paths for public assets
 const KiitCampus3 = "/assets/KIIT-University-Camus-3-Library.jpg";
 const heroCampus = "/assets/KIIT_img.webp";
 const KiitCampus17 = "/assets/cam17.jpg";
 const KiiTSchoolofArch = "/assets/KIIT-School-of-Architecture-Planning-.jpg";
 const KiitAbout = "/assets/About-kiit.jpg";
-// import { useAuth } from "@/hooks/useAuth";
-import { useRef, useEffect, useState, useMemo } from "react";
-
-const kiitMascot = "/assets/kiit-mascot.jpg";
 
 export const Hero = () => {
   const router = useRouter();
-  // const { user } = useAuth();
-  const [ripples, setRipples] = useState<Array<{
-    id: number;
-    x: number;
-    y: number;
-  }>>([]);
+  const pathname = usePathname();
+  const { user } = useAuth();
+  
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number; }>>([]);
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   // Grid layout config
-  const [cellSize, setCellSize] = useState(40); // 40 desktop, 30 mobile
+  const [cellSize, setCellSize] = useState(40); 
   const [cols, setCols] = useState(0);
   const [rows, setRows] = useState(0);
+  
   const gridCells = useMemo(() => {
-    return Array.from({
-      length: cols * rows
-    }, (_, i) => i);
+    return Array.from({ length: cols * rows }, (_, i) => i);
   }, [cols, rows]);
 
-  // Compute grid layout based on hero size
   useEffect(() => {
     const computeLayout = () => {
       if (!heroRef.current) return;
@@ -58,7 +53,7 @@ export const Hero = () => {
     };
   }, []);
 
-  // Ripple effect and hover highlight
+  // Ripple effect logic
   useEffect(() => {
     const heroElement = heroRef.current;
     const gridElement = gridRef.current;
@@ -67,6 +62,7 @@ export const Hero = () => {
     let rafPending = false;
     let lastX = 0;
     let lastY = 0;
+    
     const highlightCell = () => {
       rafPending = false;
       const rect = heroElement.getBoundingClientRect();
@@ -74,17 +70,24 @@ export const Hero = () => {
       const y = lastY - rect.top;
       const col = Math.floor(x / cellSize);
       const row = Math.floor(y / cellSize);
-      if (col < 0 || col >= cols || row < 0 || row >= rows) return;
-
-      const cellIndex = row * cols + col;
-      const cell = gridElement.children[cellIndex] as HTMLElement;
-      if (cell) {
-        cell.classList.add('highlight');
-        setTimeout(() => cell.classList.remove('highlight'), 200);
-      }
+      if (col < 0 || row < 0 || col >= cols || row >= rows) return;
+      const index = row * cols + col;
+      const el = gridElement.children[index] as HTMLElement | undefined;
+      if (!el) return;
+      
+      el.style.background = 'rgba(255,255,255,0.12)';
+      el.style.boxShadow = '0 0 18px rgba(255,255,255,0.25)';
+      el.style.borderColor = 'rgba(255,255,255,0.25)';
+      el.style.transition = 'background 200ms ease, box-shadow 200ms ease, border-color 200ms ease';
+      
+      window.setTimeout(() => {
+        el.style.background = 'transparent';
+        el.style.boxShadow = 'none';
+        el.style.borderColor = 'transparent';
+      }, 220);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMove = (e: MouseEvent) => {
       lastX = e.clientX;
       lastY = e.clientY;
       if (!rafPending) {
@@ -97,179 +100,261 @@ export const Hero = () => {
       const rect = heroElement.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      setRipples(prev => [...prev, { id: rippleId++, x, y }]);
-      setTimeout(() => setRipples(prev => prev.filter(r => r.id !== rippleId - 1)), 600);
+      const newRipple = { id: rippleId++, x, y };
+      setRipples(prev => [...prev, newRipple]);
+      setTimeout(() => {
+        setRipples(current => current.filter(r => r.id !== newRipple.id));
+      }, 1200);
     };
 
-    heroElement.addEventListener('mousemove', handleMouseMove);
+    heroElement.addEventListener('mousemove', handleMove);
     heroElement.addEventListener('click', handleClick);
-
     return () => {
-      heroElement.removeEventListener('mousemove', handleMouseMove);
+      heroElement.removeEventListener('mousemove', handleMove);
       heroElement.removeEventListener('click', handleClick);
     };
-  }, [cols, rows, cellSize]);
+  }, [cellSize, cols, rows]);
 
-  const slides = [
-    heroCampus,
-    KiitCampus3,
-    KiitCampus17,
-    KiiTSchoolofArch,
-    KiitAbout,
-  ];
+  const scrollToSection = (href: string) => {
+    if (pathname !== "/") {
+      router.push("/");
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 500);
+    } else {
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const sliderRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const slides = useMemo(() => [heroCampus, KiiTSchoolofArch, KiitCampus3, KiitAbout, KiitCampus17], []);
+  const slideCount = slides.length; 
+
+  const goToSlide = (index: number, withTransition = true) => {
+    if (!sliderRef.current) return;
+    const slideWidth = sliderRef.current.clientWidth;
+    if (!withTransition) sliderRef.current.style.transition = 'none';
+    else sliderRef.current.style.transition = 'transform 500ms ease-in-out';
+    
+    sliderRef.current.style.transform = `translateX(-${index * slideWidth}px)`;
+
+    const dots = document.querySelectorAll('#dot-indicators span');
+    const dotIndex = index === slideCount ? 0 : (index % slideCount);
+    dots.forEach(d => d.classList.remove('bg-black'));
+    if (dots[dotIndex]) dots[dotIndex].classList.add('bg-black');
+  };
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [slides.length]);
+    goToSlide(currentSlide, false);
+    let interval: NodeJS.Timeout | null = null;
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (interval) clearInterval(interval);
+      } else {
+        if (interval) clearInterval(interval);
+        interval = setInterval(() => {
+          setCurrentSlide(prev => {
+            const next = prev + 1;
+            goToSlide(next);
+            return next;
+          });
+        }, 3000);
+      }
+    };
 
-  const handleSignIn = () => {
-    router.push('/auth');
-  };
+    interval = setInterval(() => {
+      setCurrentSlide(prev => {
+        const next = prev + 1;
+        goToSlide(next);
+        return next;
+      });
+    }, 3000);
 
-  const handleExplore = () => {
-    router.push('/services');
-  };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      if (interval) clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [slideCount]);
+
+  useEffect(() => {
+    const el = sliderRef.current;
+    if (!el) return;
+    const onTransitionEnd = () => {
+      if (currentSlide === slideCount) {
+        goToSlide(0, false);
+        void el.offsetWidth;
+        setCurrentSlide(0);
+      }
+    };
+    el.addEventListener('transitionend', onTransitionEnd);
+    return () => el.removeEventListener('transitionend', onTransitionEnd);
+  }, [currentSlide, slideCount]);
+
+  useEffect(() => {
+    const handleFocus = () => {
+      if (sliderRef.current) {
+        const current = currentSlide === slideCount ? 0 : currentSlide;
+        goToSlide(current, false);
+      }
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [currentSlide, slideCount]);
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden bg-gradient-to-br from-kiit-green to-campus-blue" ref={heroRef}>
-      {/* Interactive Grid Overlay */}
-      <div ref={gridRef} className="absolute inset-0 pointer-events-none">
-        {gridCells.map((index) => {
-          const col = index % cols;
-          const row = Math.floor(index / cols);
-          return (
-            <div
-              key={index}
-              className="absolute transition-colors duration-100 bg-transparent border border-transparent hover:border-kiit-green/20"
-              style={{
-                left: `${col * cellSize}px`,
-                top: `${row * cellSize}px`,
-                width: `${cellSize}px`,
-                height: `${cellSize}px`,
-              }}
-            />
-          );
-        })}
+    <section ref={heroRef} id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
+      background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 70%, #15803d 100%)'
+    }}>
+      {/* Grid Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 opacity-100" style={{
+          backgroundImage: `
+              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            `,
+          backgroundSize: `${cellSize}px ${cellSize}px`,
+          backgroundPosition: '0 0, 0 0'
+        }} />
+
+        <div ref={gridRef} className="absolute inset-0 pointer-events-none" style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
+          gridTemplateRows: `repeat(${rows}, ${cellSize}px)`
+        }}>
+          {gridCells.map(i => (
+            <div key={i} className="transition-all duration-200 ease-out border border-transparent" style={{
+              width: `${cellSize}px`,
+              height: `${cellSize}px`
+            }} />
+          ))}
+        </div>
       </div>
 
       {/* Ripples */}
-      {ripples.map((ripple) => (
-        <div
-          key={ripple.id}
-          className="absolute w-4 h-4 rounded-full pointer-events-none bg-kiit-green animate-ping"
-          style={{ left: ripple.x, top: ripple.y }}
-        />
+      {ripples.map(ripple => (
+        <div key={ripple.id} className="absolute pointer-events-none" style={{
+          left: ripple.x - 100,
+          top: ripple.y - 100,
+          width: 200,
+          height: 200
+        }}>
+          <div className="w-full h-full rounded-full border-2 border-kiit-green/60 animate-ping" style={{
+            animation: 'ripple 1.2s ease-out forwards'
+          }} />
+          <div className="absolute inset-4 rounded-full border border-white/40 animate-ping" style={{
+            animation: 'ripple 1.2s ease-out 0.2s forwards'
+          }} />
+        </div>
       ))}
 
-      {/* Main Content */}
-<div className="relative z-10 flex flex-col items-center justify-between min-h-screen py-12 lg:flex-row lg:py-16 w-full">
-        {/* Left Content */}
-        <div className="flex-1 mb-8 text-center lg:text-left lg:mb-0 lg:pr-12">
-          <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 rounded-full bg-white/20 backdrop-blur-sm">
-            <Image src={kiitMascot} alt="KIIT Mascot" width={48} height={48} className="rounded-full" />
-            <div>
-              <h1 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl font-poppins drop-shadow-lg">
-                KIIT Saathi
+      {/* Floating Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-10 w-20 h-20 bg-white rounded-full animate-float"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-white/60 rounded-full animate-bounce-slow"></div>
+        <div className="absolute bottom-32 left-20 w-12 h-12 bg-white/40 rounded-full animate-float"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 z-10">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Text Content */}
+          <div className="text-center lg:text-left space-y-4 sm:space-y-6 lg:space-y-8">
+            <div className="inline-flex items-center gap-2 glass-card px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white">
+              <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-campus-orange" />
+              Made with love for KIIT students
+            </div>
+
+            <div className="space-y-3 sm:space-y-4 my-2 sm:my-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-bold text-white leading-tight">
+                One platform that 
+                <span className="block text-white">solves all your</span>
+                campus needs
               </h1>
-              <p className="text-sm font-medium text-white/80">Your Campus Companion</p>
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white font-inter leading-relaxed px-2 sm:px-0">
+                Everything a KIITian needs - from academics to campus life, all in one smart platform.
+              </p>
+
+              {!user ? (
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0">
+                  <Button size="lg" className="px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base bg-gradient-to-br from-green-300 via-blue-500 to-blue-400 text-white font-bold hover:scale-105 transition-all duration-300 shadow-lg hover:bg-foreground/80 hover:shadow-xl" onClick={() => router.push('/auth')}>
+                    Get Started Free
+                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0">
+                  <Button onClick={() => scrollToSection("#services")} size="lg" className="bg-gradient-to-br from-green-300 via-blue-500 to-blue-400 px-6 sm:px-10 py-3 sm:py-4 text-sm sm:text-base text-white font-bold hover:bg-foreground/80 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Go to Services
+                    <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
 
-          <h2 className="mb-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl font-poppins drop-shadow-2xl">
-            Making KIIT Life
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-kiit-green via-fedkiit-green to-campus-blue">
-              Easier, One Service
-            </span>
-            at a Time
-          </h2>
-
-          <p className="max-w-lg mx-auto mb-8 text-xl leading-relaxed sm:text-2xl lg:text-3xl text-white/90 lg:mx-0 drop-shadow-lg">
-            Your favorite senior in app form. Study materials, lost & found, society events, food coupons, and more - all in one place.
-          </p>
-
-          <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
-            <Button
-              size="lg"
-              onClick={handleExplore}
-              className="px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform shadow-xl gradient-primary hover:shadow-2xl hover:scale-105"
-            >
-              Explore Services
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            {/* {!user && (
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={handleSignIn}
-                className="px-8 py-4 text-lg font-semibold text-white border-white/30 hover:bg-white/10 backdrop-blur-sm"
-              >
-                Get Started
-                <Smartphone className="w-5 h-5 ml-2" />
-              </Button>
-            )} */}
-          </div>
-
-          {/* Quick Stats */}
-          <div className="flex flex-wrap justify-center gap-6 mt-12 lg:justify-start">
-            <div className="text-center">
-              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">10+</div>
-              <div className="text-sm font-medium text-white/70 sm:text-base">Campus Services</div>
-            </div>
-            <div className="text-center">
-              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">24/7</div>
-              <div className="text-sm font-medium text-white/70 sm:text-base">AI Assistant</div>
-            </div>
-            <div className="text-center">
-              <div className="mb-1 text-3xl font-bold text-white sm:text-4xl lg:text-5xl drop-shadow-lg">100K+</div>
-              <div className="text-sm font-medium text-white/70 sm:text-base">Students Helped</div>
+          {/* Right Image Slider Content */}
+          <div className="relative mt-6 sm:mt-8 lg:mt-0">
+            <div className="relative px-4 sm:px-0">
+              <div className="flex flex-col items-center">
+                <div className="w-full max-w-[570px] h-[200px] sm:h-[240px] md:h-[300px] lg:h-[330px] overflow-hidden relative rounded-2xl sm:rounded-3xl bg-white/5">
+                  <div 
+                    className="flex transition-transform duration-500 ease-in-out" 
+                    id="slider" 
+                    ref={sliderRef}
+                    style={{ willChange: 'transform' }}
+                  >
+                    {/* ✅ FIX: All images are now strings */}
+                    {slides.map((src, idx) => (
+                      <img
+                        key={idx}
+                        src={src}
+                        className="w-full flex-shrink-0 object-cover"
+                        alt={`KIIT Campus ${idx + 1}`}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        style={{ display: 'block' }}
+                      />
+                    ))}
+                    {/* Cloned First Slide */}
+                    <img
+                      key="clone-first"
+                      src={slides[0]}
+                      className="w-full flex-shrink-0 object-cover"
+                      alt="KIIT Campus"
+                      style={{ display: 'block' }}
+                    />
+                  </div>
+                  
+                  {/* Dots */}
+                  <div className="flex items-center mt-5 space-x-2" id="dot-indicators">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="w-3 h-3 bg-black/20 rounded-full"></span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
-
-        {/* Right Image Slider */}
-        <div className="relative flex-1 max-w-md mx-auto lg:max-w-lg xl:max-w-xl lg:mx-0">
-          <div className="relative overflow-hidden shadow-2xl rounded-3xl">
-            <div
-              className="flex transition-transform duration-1000 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {/* Slides */}
-              {slides.map((src, idx) => (
-                <Image 
-                  key={idx} 
-                  src={src} 
-                  className="flex-shrink-0 object-cover w-full" 
-                  alt={`KIIT Campus ${idx + 1}`}
-                  width={500}
-                  height={400}
-                  loading={idx === 0 ? "eager" : "lazy"}
-                  style={{ display: 'block' }}
-                />
-              ))}
-              {/* cloned first slide for seamless looping */}
-              <Image 
-                key="clone-first" 
-                src={slides[0]} 
-                className="flex-shrink-0 object-cover w-full" 
-                alt="KIIT Campus"
-                width={500}
-                height={400}
-                style={{ display: 'block' }}
-              />
-            </div>
-            <div className="flex items-center mt-5 space-x-2" id="dot-indicators">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`w-3 h-3 rounded-full transition-colors ${idx === currentSlide ? 'bg-white' : 'bg-white/50'}`}
-                />
-              ))}
-            </div>
+        
+        {/* Stats */}
+        <div className="mt-5 flex flex-wrap gap-3 sm:gap-4 md:gap-8 justify-center lg:justify-between pt-8 sm:pt-12 px-4 sm:px-10">
+          <div className="text-center flex-1 min-w-[80px]">
+            <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white">10+</div>
+            <div className="text-xs sm:text-sm md:text-base text-white/70 font-medium">Campus Services</div>
+          </div>
+          <div className="text-shadow-lg text-center flex-1 min-w-[80px]">
+            <div className="text-shadow-lg text-xl sm:text-2xl md:text-4xl font-bold text-white">24/7</div>
+            <div className="text-shadow-lg text-xs sm:text-sm md:text-base text-white/70 font-medium">AI Assistant</div>
+          </div>
+          <div className="text-shadow-lg text-center flex-1 min-w-[80px]">
+            <div className="text-shadow-lg text-xl sm:text-2xl md:text-4xl font-bold text-white">100%</div>
+            <div className="text-shadow-lg text-xs sm:text-sm md:text-base text-white/70 font-medium">KIIT Focused</div>
           </div>
         </div>
       </div>
