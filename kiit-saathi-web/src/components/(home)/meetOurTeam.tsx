@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Linkedin, Instagram, Github } from "lucide-react";
-import { teamData } from "@/app/study-material/data/team";
+import { teamData } from "@/components/team";
 import { error } from "console";
 
 interface TeamMember {

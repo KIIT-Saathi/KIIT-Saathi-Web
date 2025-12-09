@@ -1,30 +1,32 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { cookies, headers } from "next/headers";
+import { createServerClient } from "@/lib/supabaseServer";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!  
-);
-
-export async function GET(req: Request) {
+export async function GET() {
   try {
+const supabase = createServerClient();
+
     const { data, error } = await supabase
-      .from("events")
-      .select("*");
+      .from("calendar_events")
+      .select("*")
+      .order("event_date", { ascending: true });
 
     if (error) {
-      console.error("Supabase error:", error);
+      console.error("Supabase DB Error:", error);
       return NextResponse.json(
-        { error: "Failed to fetch events" },
+        { success: false, message: error.message },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ events: data });
-  } catch (err) {
-    console.error("Route error:", err);
+    return NextResponse.json({
+      success: true,
+      data,
+    });
+  } catch (err: any) {
+    console.error("GET /api/events ERROR:", err);
     return NextResponse.json(
-      { error: "Unexpected server error" },
+      { success: false, message: err.message || "Internal Server Error" },
       { status: 500 }
     );
   }

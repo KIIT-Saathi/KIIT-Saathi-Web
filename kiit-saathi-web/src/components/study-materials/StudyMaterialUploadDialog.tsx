@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Upload, Loader, FileText } from "lucide-react";
 import { createClient } from '@supabase/supabase-js';
-import { semesters, semesterSubjects } from "../../app/study-material/data/studyMaterials";
+import { semesters, semesterSubjects } from "../../app/data/studyMaterials";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, FileText, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { campusLocations } from '@/app/study-material/data/campusLocations';
+import { campusLocations } from '@/app/data/campusLocations';
 import { useRouter } from 'next/navigation';
 
 const InteractiveMapPage: React.FC = () => {
