@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { ArrowLeft, Navigation, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { campusLocations, CampusLocation } from "@/app/data/campusLocations";
 
-export default function CampusMapView({ params }) {
+export default function CampusMapView() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const { campusId } = params;
+  const params = useParams();                // ⬅️ NEW
+  const campusId = params.campusId as string; // ⬅️ FIXED
 
   const [campusData, setCampusData] = useState<CampusLocation | null>(null);
 
   useEffect(() => {
-    // 1️⃣ First check if campusData exists in localStorage (when navigating)
+    // 1️⃣ First check localStorage for persisted data
     const stored = localStorage.getItem("campusData");
     if (stored) {
       setCampusData(JSON.parse(stored));
-      localStorage.removeItem("campusData"); // clear after use
+      localStorage.removeItem("campusData"); 
       return;
     }
 
@@ -61,7 +61,6 @@ export default function CampusMapView({ params }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900">
-      {/* Header */}
       <header className="p-6 flex justify-between items-center bg-white/10 backdrop-blur-lg border-b border-white/10">
         <Button
           onClick={() => router.push("/campus-map")}
@@ -79,7 +78,6 @@ export default function CampusMapView({ params }) {
         </div>
       </header>
 
-      {/* Body */}
       <main className="container p-6 mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
@@ -111,7 +109,6 @@ export default function CampusMapView({ params }) {
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
             📍 Points of Interest

@@ -8,8 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { branchCourseStructure, branches } from "./data/courseStructure";
-import { contactPersons, facultyMembers } from "./data/facultyData";
+import { branchCourseStructure, branches } from "../data/courseStructure";
+import { contactPersons, facultyMembers } from "../data/facultyData";
 import FacultyCard from "@/components/course/FacultyCard";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

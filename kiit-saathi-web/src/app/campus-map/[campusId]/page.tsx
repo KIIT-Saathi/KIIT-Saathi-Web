@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { ArrowLeft, Navigation, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { campusLocations, CampusLocation } from "@/app/data/campusLocations";
 
-export default function CampusMapView({ params }) {
+export default function CampusMapView() {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const { campusId } = params;
+  const params = useParams();         // ⬅️ NEW
+  const campusId = params.campusId as string;  // ⬅️ extract dynamic param
 
   const [campusData, setCampusData] = useState<CampusLocation | null>(null);
 
@@ -19,7 +19,7 @@ export default function CampusMapView({ params }) {
     const stored = localStorage.getItem("campusData");
     if (stored) {
       setCampusData(JSON.parse(stored));
-      localStorage.removeItem("campusData"); // clear after use
+      localStorage.removeItem("campusData");
       return;
     }
 

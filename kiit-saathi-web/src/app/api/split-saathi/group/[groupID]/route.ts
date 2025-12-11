@@ -1,4 +1,5 @@
-// app/api/split-saathi/group/[groupId]/route.ts
+// app/api/split-saathi/group/[groupID]/route.ts
+
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
@@ -19,8 +20,13 @@ async function getUserFromAuthHeader(authHeader?: string) {
   return data.user;
 }
 
-export async function GET(request: Request, { params }: { params: { groupID: string } }) {
-  const groupId = params.groupID;
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ groupID: string }> }
+) {
+  const { groupID } = await params;
+  const groupId = groupID;
+
   try {
     const authHeader = request.headers.get("authorization") || "";
     const user = await getUserFromAuthHeader(authHeader);
@@ -28,7 +34,6 @@ export async function GET(request: Request, { params }: { params: { groupID: str
     if (!user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const user_id = user.id;
 
     // Fetch group
     const { data: group, error: groupError } = await supabase
@@ -47,7 +52,7 @@ export async function GET(request: Request, { params }: { params: { groupID: str
 
     if (membersError) throw membersError;
 
-    // Fetch expenses with joined paid_by_member
+    // Fetch expenses
     const { data: expenses, error: expensesError } = await supabase
       .from("expenses")
       .select(`
@@ -61,7 +66,10 @@ export async function GET(request: Request, { params }: { params: { groupID: str
 
     return NextResponse.json({ group, members, expenses }, { status: 200 });
   } catch (err: any) {
-    console.error("Error fetching group data:", err?.message || err);
-    return NextResponse.json({ error: "Failed to fetch group data" }, { status: 500 });
+    console.error("Error fetching group data:", err);
+    return NextResponse.json(
+      { error: "Failed to fetch group data" },
+      { status: 500 }
+    );
   }
 }
