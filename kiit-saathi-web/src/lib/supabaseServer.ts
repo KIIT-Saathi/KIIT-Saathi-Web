@@ -13,7 +13,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 
 // ✅ Now this function exists
 export function createServerClient() {
-  return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  return createClient(SUPABASE_URL as string, SUPABASE_SERVICE_ROLE_KEY as string, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }

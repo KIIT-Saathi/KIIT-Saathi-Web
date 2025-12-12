@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 
 import React, { useState } from 'react';
 import { ArrowLeft, MapPin, FileText, Home } from 'lucide-react';
@@ -8,7 +7,7 @@ import { campusLocations } from '@/app/data/campusLocations';
 import { useRouter } from 'next/navigation';
 
 const CampusMapsPage: React.FC = () => {
-    const router = useRouter();
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'campuses' | 'hostels'>('campuses');
 
@@ -23,8 +22,12 @@ const CampusMapsPage: React.FC = () => {
     router.push(`/campus-map/${campus.id}`);
   };
 
+  // FIXED: remove invalid "state" push option
   const handleInteractiveMap = () => {
-    router.push('/campus-map/interactive', { state: { campusData: campus25 } });
+    if (campus25) {
+      localStorage.setItem("campusData", JSON.stringify(campus25));
+    }
+    router.push("/campus-map/interactive");
   };
 
   const handleHostelLayout = () => {
@@ -191,7 +194,7 @@ const CampusMapsPage: React.FC = () => {
             </section>
           </div>
         ) : (
-          // Hostels tab (unchanged)
+          // Hostels tab
           <div className="space-y-4">
             <div className="text-center mb-3">
               <h2 className="text-3xl font-bold text-white mb-1">Hostel Floor Layouts</h2>
@@ -239,4 +242,3 @@ const CampusMapsPage: React.FC = () => {
 };
 
 export default CampusMapsPage;
-////sdsdsdsd

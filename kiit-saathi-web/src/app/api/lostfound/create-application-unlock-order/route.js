@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
-import { authenticateToken } from "@/lib/auth"; // your Next.js version of token validator
+import { supabase } from "@/lib/supabaseServer";
+import { authenticateToken } from "@/lib/supabaseAuth"; // your Next.js version of token validator
 import Razorpay from "razorpay";
 
 // Initialize Razorpay (server-side only)

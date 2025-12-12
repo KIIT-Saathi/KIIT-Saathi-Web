@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
-import { authenticateToken } from "@/lib/auth"; // your JWT verifier
+import { supabase } from "@/lib/supabaseServer";
+import { authenticateToken } from "@/lib/supabaseAuth"; // your JWT verifier
 
 export async function POST(req) {
   try {

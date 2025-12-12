@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, Download, RotateCcw, TrendingUp, BookOpen } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { curriculum } from '@/app/data/curriculum';
+import { curriculum } from '../data/curriculum';
 import { toast } from 'sonner';
 import { Navbar } from '@/components/Navbar';
 import jsPDF from 'jspdf';

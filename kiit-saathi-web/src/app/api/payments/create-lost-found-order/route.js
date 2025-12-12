@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabaseServer";
 import Razorpay from "razorpay";
 
 const razorpay = new Razorpay({

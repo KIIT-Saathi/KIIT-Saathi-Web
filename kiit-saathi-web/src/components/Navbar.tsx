@@ -52,7 +52,8 @@ export const Navbar = () => {
       return;
     }
     
-    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+   const path = typeof window !== "undefined" ? window.location.pathname : "/";
+if (path !== "/") {
       router.push("/");
       setTimeout(() => {
         const element = document.querySelector(href);
@@ -77,9 +78,9 @@ export const Navbar = () => {
 
   // Scroll spy functionality
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    
-    if (window.location.pathname !== "/"){
+    const path = typeof window !== "undefined" ? window.location.pathname : "/";
+    if (path !== "/") {
+
       setActiveSection("home")
        return;
     }
@@ -115,7 +116,7 @@ export const Navbar = () => {
         }
       });
     };
-  }, [navItems]);
+  }, [ navItems]);
 
   const isActive = (href: string) => {
     const sectionId = href.substring(1);

@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function HostelDetailPage({ params }) {
+export default function HostelDetailPage() {
   const router = useRouter();
-  const { hostelId } = params;
+  const params = useParams();                 // ⬅️ FIXED
+  const hostelId = params.hostelId as string; // ⬅️ FIXED
 
   const [selectedFloor, setSelectedFloor] = useState<number>(0);
 
@@ -123,11 +124,7 @@ export default function HostelDetailPage({ params }) {
                   src={floorPdfMap[selectedFloor]}
                   width="100%"
                   height="600"
-                  style={{
-                    border: "none",
-                    display: "block",
-                    background: "#1e293b",
-                  }}
+                  style={{ border: "none", display: "block", background: "#1e293b" }}
                 />
               </div>
             </div>

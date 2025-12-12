@@ -1,12 +1,13 @@
 // src/app/api/study-materials/debug/[type]/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { type: string } }
+  { params }: { params: Promise<{ type: string }> }
 ) {
-  const { type } = params;
+  const { type } = await params; // MUST await because Next.js types params as a Promise
 
   try {
     console.log(`🔍 Debug: Testing access to ${type} table`);
