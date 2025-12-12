@@ -19,11 +19,9 @@ const InspirationCard: React.FC<InspirationCardProps> = ({ title, description, i
     <div className="group w-full bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 h-full flex flex-col transform hover:-translate-y-2 ring-2 ring-green-400/20 hover:ring-green-400/40 hover:ring-offset-2 hover:ring-offset-green-100">
       {/* Image section with zoom + overlay */}
       <div className="relative overflow-hidden h-32">
-        <Image
+        <img
           src={imageUrl}
           alt={title}
-          width={400}
-          height={128}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -65,42 +63,46 @@ const InspirationCard: React.FC<InspirationCardProps> = ({ title, description, i
 const FounderCard: React.FC = () => {
   return (
     <div className="group w-full bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-500 h-full flex flex-col items-center transform hover:-translate-y-2 ring-2 ring-green-400/20 hover:ring-green-400/40 hover:ring-offset-2 hover:ring-offset-green-100">
-      {/* Image section */}
-      <div className="relative overflow-hidden h-32">
-        <Image
-          src={founderImg}
-          alt="Founder"
-          width={400}
-          height={128}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
+      <div className="p-3 flex flex-col items-center flex-1 justify-center relative">
+        {/* Blue glowing background behind image */}
+        <div className="absolute top-6">
+          <div className="absolute inset-0 bg-blue-400 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 w-32 h-32" />
+        </div>
 
-      {/* Text section */}
-      <div className="p-3 flex flex-col flex-1 items-center text-center">
-        <h3 className="text-md font-bold text-gray-900 mb-1 font-poppins group-hover:text-blue-600 transition-colors duration-300">
-          Dr. Achyuta Samanta
-        </h3>
-        <p className="text-gray-600 text-sm mb-2 leading-relaxed flex-1 font-poppins">
+        <img
+          src={founderImg}
+          alt="Prof. (Dr.) Achyuta Samanta"
+          className="relative w-28 h-28 object-cover rounded-full shadow-lg border-4 border-blue-100 mb-2 group-hover:scale-105 transition-transform duration-500"
+        />
+
+        <h2 className="text-lg font-bold text-gray-900 text-center mb-1">
+          Prof. (Dr.) Achyuta Samanta
+        </h2>
+        <p className="text-sm text-blue-600 font-semibold mb-2 text-center">
+          Founder KIIT, KISS, KIMS & Art of Giving
+        </p>
+        <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mb-3" />
+        <p className="text-gray-700 leading-relaxed text-xs font-poppins text-center">
+          Dr. Achyuta Samanta is an educationalist, philanthropist, humanitarian, social worker, and writer.
           He is the founder of KIIT & KISS, both educational institutions of global repute and recognition.
         </p>
       </div>
-      <div className="mt-auto p-3">
-        <a
-          href="https://achyutasamanta.com/"
-          className="inline-flex items-left pb-3 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors duration-300"
-          target="_blank"
-        >
-          Learn More
-          <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
-      </div>
+      <div className="mt-auto">
+          <a
+            href="https://achyutasamanta.com/"
+            className="inline-flex items-left pb-3 text-blue-600 font-semibold text-sm hover:text-blue-700 transition-colors duration-300"
+            target="_blank"
+          >
+            Learn More
+            <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
     </div>
   );
 };
+
 
 const InspirationSection: React.FC = () => {
   const cards = [
