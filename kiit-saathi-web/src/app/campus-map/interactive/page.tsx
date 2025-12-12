@@ -31,7 +31,7 @@ const InteractiveMapPage: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white mb-4">Campus 25 not found</h1>
-          <Button onClick={() => router.push('/campus-maps')} className="bg-green-600 hover:bg-green-700">
+          <Button onClick={() => router.push('/campus-map')} className="bg-green-600 hover:bg-green-700">
             Back to Campus Maps
           </Button>
         </div>
@@ -45,7 +45,7 @@ const InteractiveMapPage: React.FC = () => {
       <header className="border-b border-purple-700 bg-slate-900/50 backdrop-blur">
         <div className="container mx-auto px-6 py-6 flex items-center justify-between">
           <Button
-            onClick={() => router.push('/campus-maps')}
+            onClick={() => router.push('/campus-map')}
             variant="ghost"
             className="flex items-center gap-2 text-white hover:text-green-400 transition-colors"
           >
